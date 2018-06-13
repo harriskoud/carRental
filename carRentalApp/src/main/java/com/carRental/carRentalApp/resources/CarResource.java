@@ -88,5 +88,10 @@ public class CarResource {
 		return ResponseEntity.ok(carService.getListOfCars());
 	}
 	
+	@RequestMapping("/list1")
+	public ResponseEntity<?> getListOfCarsWithHystrixThreadPool(){
+		return ResponseEntity.ok(carService.getListOfCarsWithHystrixThreadPool());
+	}
+	
 
 }

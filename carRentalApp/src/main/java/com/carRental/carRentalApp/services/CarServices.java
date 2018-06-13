@@ -1,5 +1,6 @@
 package com.carRental.carRentalApp.services;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -23,15 +24,29 @@ public class CarServices {
 		return carRepository.findAll();
 	}
 	
+	
+	//Known as Bulkhead
+	@HystrixCommand(fallbackMethod = "buildFallBackCarList", threadPoolKey = "CarThreadPool", threadPoolProperties = {
+			@HystrixProperty(name = "coreSize", value = "30"),  //max number of threads
+			@HystrixProperty(name = "maxQueueSize", value = "10") // how many requests can the queue take. The othersS will be rejected
+	})
+	public List<Car> getListOfCarsWithHystrixThreadPool() {
+		testHystrixWithDelay();
+		return carRepository.findAll();
+	}
+	
 	private void testHystrixWithDelay() {
-		
 		try {
 		Thread.sleep(11000);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+	}
+	
+	private List<Car> buildFallBackCarList(){
+		String a[] = new String[]{"FIAT","BMW","AUDI","VW"};
+	      List carList = Arrays.asList(a);
+	      return carList;
 	}
 	
 
