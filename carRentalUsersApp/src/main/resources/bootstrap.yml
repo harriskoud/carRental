@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: user-microservice
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8888/config-microservice
+      fail-fast: true
+  #profiles:
+   #active: dev
+   #active: qa
+   #active: prod
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true

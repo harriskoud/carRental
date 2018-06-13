@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: reservation-microservice
+  cloud:
+   config:
+    enabled: true
+    uri: http://localhost:8888/config-microservice
+    fail-fast: false
+  profiles:
+    active: dev
+eureka:
+  client:
+    enabled: true
