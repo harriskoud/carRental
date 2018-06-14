@@ -1,11 +1,13 @@
 server:
  port: 8083
 zuul:
- routes:
-  car-microservice:
-   url: http://localhost:8080/car-microservice
-  user-microservice:
-   url: http://localhost:8082/user-microservice
+ prefix: /api
+ #routes:
+ # car-microservice:
+ #  url: http://localhost:8080/car-microservice
+ #  serviceId: car-microservice
+ # user-microservice:
+ #  url: http://localhost:8082/user-microservice
 ribbon:
  eureka:
   enabled: false
@@ -19,4 +21,12 @@ eureka:
   enabled: true
   register-with-eureka: true
   fetch-registry: true
+  service-url:
+   defaultZone: http://localhost:8761/eureka/
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: '*'
 

@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
 import com.carRentalUsersApp.carRentalUsers.Dto.UserDto;
 import com.carRentalUsersApp.carRentalUsers.Dto.UserResourceAssembler;
 import com.carRentalUsersApp.carRentalUsers.domains.User;
+import com.carRentalUsersApp.carRentalUsers.domains.ApiDomains.Car;
 import com.carRentalUsersApp.carRentalUsers.repositories.UserRepository;
 import com.carRentalUsersApp.carRentalUsers.services.UserServices;
 
@@ -36,12 +39,15 @@ public class UserResource {
 	private final UserRepository userRepository;
 	private final UserResourceAssembler userResourceAssembler;
 	private final UserServices userServices;
+	@Autowired
+	RestTemplate rest;
 
 	
 	@GetMapping("{username}")
 	public @ResponseBody ResponseEntity<?> getUser(@PathVariable(name="username") String username) {
 		
 		Optional<User> oUser = userRepository.findByUsername(username);
+		//ResponseEntity<Car>  response = rest.getForEntity("http://localhost:8080/car-microservice/ui/car/BMW", Car.class);
 		return oUser.map(u -> ResponseEntity.ok(userResourceAssembler.toResource(u))).orElse(ResponseEntity.notFound().build());
 		
 	}

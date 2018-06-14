@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.carRental.carRentalApp.domains.Car;
+import com.carRental.carRentalApp.domains.ApiDomains.User;
+import com.carRental.carRentalApp.proxy.EurekaUserInvocation;
 import com.carRental.carRentalApp.repositories.CarRepository;
 import com.carRental.carRentalApp.resources.dto.CarDto;
 import com.carRental.carRentalApp.resources.dto.CarResourceAssembler;
@@ -40,6 +43,7 @@ public class CarResource {
 	private final CarServices carService;
 /*	@Value("${info.fname}")
 	private String fname;*/
+	private final EurekaUserInvocation eurekaUserInvocation;
 
 	@GetMapping("{brandName}")
 	public @ResponseBody ResponseEntity<?> getCar(@PathVariable(name = "brandName") String brandname) {
@@ -50,6 +54,9 @@ public class CarResource {
 		/*
 		 * if(oCar.isPresent()){ return oCar.get(); }else { return null; }
 		 */
+		//ResponseEntity<User>  response = new RestTemplate().getForEntity("http://localhost:8082/user-microservice/ui/user/Andreas", User.class);
+		//ResponseEntity<User> oUser = eurekaUserInvocation.getUserInfo("Andreas");
+		
 		return oCar.map(c -> ResponseEntity.ok(carResourceAssembler.toResource(c)))
 				.orElse(ResponseEntity.notFound().build());
 	}

@@ -31,3 +31,9 @@ server:
   port: 8082
   servlet:
    context-path: /${spring.application.name}
+management:
+ endpoints:
+  web:
+   base-path: /management
+   exposure:
+    include: '*'

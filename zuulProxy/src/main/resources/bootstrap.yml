@@ -1,0 +1,10 @@
+spring:
+ cloud:
+  config:
+   enabled: true
+   uri: http://localhost:8888/config-microservice
+   fail-fast: false
+ #profiles:
+  #active: dev
+  #active: qa
+  #active: prod

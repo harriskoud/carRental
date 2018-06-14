@@ -48,6 +48,7 @@ dependencies {
 	compile('org.springframework.cloud:spring-cloud-config-client:1.4.3.RELEASE')
 	compile('org.springframework.cloud:spring-cloud-starter-hystrix:1.4.4.RELEASE')
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+	compile('org.springframework.cloud:spring-cloud-starter-netflix-zuul:1.4.4.RELEASE')
 	compile('io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry')
 	compile('io.micrometer:micrometer-registry-prometheus:1.0.4')
 	
