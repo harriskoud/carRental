@@ -6,8 +6,10 @@ spring:
     enabled: true
     uri: http://localhost:8888/config-microservice
     fail-fast: false
-  profiles:
-    active: dev
 eureka:
-  client:
+ instance:
+    prefer-ip-address: true
+ client:
     enabled: true
+    register-with-eureka: true
+    fetch-registry: true

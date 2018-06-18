@@ -47,7 +47,7 @@ public class UserResource {
 	public @ResponseBody ResponseEntity<?> getUser(@PathVariable(name="username") String username) {
 		
 		Optional<User> oUser = userRepository.findByUsername(username);
-		//ResponseEntity<Car>  response = rest.getForEntity("http://localhost:8080/car-microservice/ui/car/BMW", Car.class);
+		Car car = rest.getForObject("http://localhost:8080/ui/car/test/BMW", Car.class);
 		return oUser.map(u -> ResponseEntity.ok(userResourceAssembler.toResource(u))).orElse(ResponseEntity.notFound().build());
 		
 	}

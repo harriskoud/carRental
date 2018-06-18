@@ -8,7 +8,9 @@ import com.netflix.zuul.context.RequestContext;
 public class FilterUtils {
 
 	public static final String PRE_FILTER_TYPE = "pre";  
-	private static final String CORRELATION_ID ="CORRELATION_ID";
+	//public static final String PRE_FILTER_TYPE = "not_pre";
+	public static final String POST_FILTER_TYPE = "post";  
+	public static final String CORRELATION_ID ="CORRELATION_ID";
 
 	public String getCorrelationId() {
 		

@@ -1,13 +1,18 @@
 package com.carRental.carRentalApp;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.client.RestTemplate;
 
 import com.carRental.carRentalApp.services.CarServices;
+import com.carRental.carRentalApp.utils.UserContextInterceptor;
 
 @SpringBootApplication
 @RefreshScope
@@ -26,5 +31,16 @@ public class CarRentalAppApplication  {
 	@Bean
 	public LocalValidatorFactoryBean validator() {
 	    return new LocalValidatorFactoryBean();
-	}		
+	}	
+	
+	@Bean
+	 public RestTemplate getRestTemplate() {
+		RestTemplate restTemplate = new RestTemplate();
+		List interceptors = restTemplate.getInterceptors();
+		//if(interceptors == null) {
+			restTemplate.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
+		//}
+		return restTemplate;
+	}
+		
 }

@@ -3,8 +3,8 @@ spring:
     mongodb:
       url: mongodb://localhost/carRentalApp
 server:
-  servlet:
-    context-path: /${spring.application.name}
+  #servlet:
+    #context-path: /${spring.application.name}
   port: 8080
 management:
   endpoints:

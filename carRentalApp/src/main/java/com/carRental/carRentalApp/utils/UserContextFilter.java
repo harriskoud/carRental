@@ -1,4 +1,4 @@
-package com.carRentalUsersApp.carRentalUsers.utils;
+package com.carRental.carRentalApp.utils;
 
 import java.io.IOException;
 
@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+
 
 @Component
 public class UserContextFilter implements Filter {
@@ -30,7 +32,7 @@ public class UserContextFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		UserContextHolder.getContext().setCorrelationId(httpServletRequest.getHeader(UserContext.CORRELATION_ID));
-		//UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
+		// UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
 
 	}
 

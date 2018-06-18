@@ -29,8 +29,8 @@ spring:
     change-log: classpath:liquibase/master.xml
 server:
   port: 8082
-  servlet:
-   context-path: /${spring.application.name}
+  #servlet:
+   #context-path: /${spring.application.name}
 management:
  endpoints:
   web:

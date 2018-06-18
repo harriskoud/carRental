@@ -20,7 +20,7 @@ public class CarRentalUsersAppApplication {
 		SpringApplication.run(CarRentalUsersAppApplication.class, args);
 	}
 	
-	@LoadBalanced
+	//@LoadBalanced
 	@Bean
 	 public RestTemplate getRestTemplate() {
 		RestTemplate restTemplate = new RestTemplate();

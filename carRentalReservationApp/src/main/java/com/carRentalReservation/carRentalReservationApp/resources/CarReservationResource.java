@@ -2,6 +2,8 @@ package com.carRentalReservation.carRentalReservationApp.resources;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.joda.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +12,8 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
 import com.carRentalReservation.carRentalReservationApp.Dto.CarReservationAssembler;
 import com.carRentalReservation.carRentalReservationApp.Dto.CarReservationDto;
 import com.carRentalReservation.carRentalReservationApp.domains.CarReservation;
@@ -100,6 +106,18 @@ public class CarReservationResource {
 
 	public ResponseEntity<?> hystrixTest(String username, String brandName) {
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/new")
+	public @ResponseBody ResponseEntity<?> newReservation(HttpServletRequest request) {
+		String corlId = request.getHeader("CORRELATION_ID");
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+	    params.add("CORRELATION_ID", corlId);
+		
+		ResponseEntity<Car> carEntity = new RestTemplate().postForEntity("http://localhost:8080/car-microservice/ui/car/test/BMW", params,Car.class);
+		//ResponseEntity<User> userEntity = new RestTemplate().getForEntity("http://localhost:8082/user-microservice/ui/user/Harris", User.class);
+		return ResponseEntity.ok().build();
+			
 	}
 
 }

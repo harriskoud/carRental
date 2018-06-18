@@ -1,4 +1,4 @@
-package com.carRentalUsersApp.carRentalUsers.utils;
+package com.carRentalReservation.carRentalReservationApp.utils;
 
 import java.io.IOException;
 

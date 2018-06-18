@@ -2,6 +2,8 @@ package com.carRental.carRentalApp.resources;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,6 +46,7 @@ public class CarResource {
 /*	@Value("${info.fname}")
 	private String fname;*/
 	private final EurekaUserInvocation eurekaUserInvocation;
+	
 
 	@GetMapping("{brandName}")
 	public @ResponseBody ResponseEntity<?> getCar(@PathVariable(name = "brandName") String brandname) {
@@ -98,6 +101,17 @@ public class CarResource {
 	@RequestMapping("/list1")
 	public ResponseEntity<?> getListOfCarsWithHystrixThreadPool(){
 		return ResponseEntity.ok(carService.getListOfCarsWithHystrixThreadPool());
+	}
+	
+
+	@GetMapping("/test/{brandName}")
+	public @ResponseBody ResponseEntity<?> getCar( HttpServletRequest request, @PathVariable(name = "brandName") String brandname) {
+
+		String corlId = request.getHeader("CORRELATION_ID");
+		Optional<Car> oCar = carRep.findOneByBrandName(brandname);
+		
+		return oCar.map(c -> ResponseEntity.ok(carResourceAssembler.toResource(c)))
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 
