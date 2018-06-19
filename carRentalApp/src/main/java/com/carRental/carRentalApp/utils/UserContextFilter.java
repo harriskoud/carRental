@@ -33,6 +33,8 @@ public class UserContextFilter implements Filter {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		UserContextHolder.getContext().setCorrelationId(httpServletRequest.getHeader(UserContext.CORRELATION_ID));
 		// UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
+		chain.doFilter(request, response);// in order to forward!!!
+
 
 	}
 

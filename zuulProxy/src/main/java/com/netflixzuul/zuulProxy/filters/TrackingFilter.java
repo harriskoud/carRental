@@ -35,7 +35,7 @@ public class TrackingFilter extends ZuulFilter {
 			filterUtils.getCorrelationId();
 		} else {
 			filterUtils.setCorrelationId(generateCorrelationId());
-			LOGGER.info("correlation id found");
+			LOGGER.info("correlation id not found");
 		}
 
 		RequestContext ctx = RequestContext.getCurrentContext();
@@ -66,7 +66,9 @@ public class TrackingFilter extends ZuulFilter {
 	}
 
 	private String generateCorrelationId() {
-		return java.util.UUID.randomUUID().toString();
+		String generatedCorId = java.util.UUID.randomUUID().toString();
+		System.out.println(generatedCorId);
+		return generatedCorId;
 	}
 
 }
