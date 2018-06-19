@@ -15,3 +15,7 @@ management:
   endpoint:
     prometheus:
       enabled: true
+security:
+ oauth2:
+  resource:
+   userInfoUri: http://localhost:8084/user

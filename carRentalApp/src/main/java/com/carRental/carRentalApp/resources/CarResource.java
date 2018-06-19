@@ -43,10 +43,10 @@ public class CarResource {
 	private final CarRepository carRep;
 	private final CarResourceAssembler carResourceAssembler;
 	private final CarServices carService;
-/*	@Value("${info.fname}")
-	private String fname;*/
+	/*
+	 * @Value("${info.fname}") private String fname;
+	 */
 	private final EurekaUserInvocation eurekaUserInvocation;
-	
 
 	@GetMapping("{brandName}")
 	public @ResponseBody ResponseEntity<?> getCar(@PathVariable(name = "brandName") String brandname) {
@@ -57,9 +57,11 @@ public class CarResource {
 		/*
 		 * if(oCar.isPresent()){ return oCar.get(); }else { return null; }
 		 */
-		//ResponseEntity<User>  response = new RestTemplate().getForEntity("http://localhost:8082/user-microservice/ui/user/Andreas", User.class);
-		//ResponseEntity<User> oUser = eurekaUserInvocation.getUserInfo("Andreas");
-		
+		// ResponseEntity<User> response = new
+		// RestTemplate().getForEntity("http://localhost:8082/user-microservice/ui/user/Andreas",
+		// User.class);
+		// ResponseEntity<User> oUser = eurekaUserInvocation.getUserInfo("Andreas");
+
 		return oCar.map(c -> ResponseEntity.ok(carResourceAssembler.toResource(c)))
 				.orElse(ResponseEntity.notFound().build());
 	}
@@ -71,48 +73,48 @@ public class CarResource {
 	}
 
 	@DeleteMapping("{brandName}")
-	public @ResponseBody ResponseEntity<?> deleteCar(@PathVariable(name = "brandName") String brandname) {
+	public String  deleteCar(@PathVariable(name = "brandName") String brandname) {
 
 		carRep.deleteByBrandName(brandname);
-		return ResponseEntity.noContent().build();
+		return "Deletion Completed";
 	}
 
 	@PostMapping()
 	public @ResponseBody ResponseEntity<?> createCar(@RequestBody Car car) {
 		return ResponseEntity.ok(carResourceAssembler.toResource(carRep.save(car)));
 	}
-	
+
 	@PutMapping()
 	public @ResponseBody ResponseEntity<?> updateCar(@RequestBody Car car) {
 		return ResponseEntity.ok(carResourceAssembler.toResource(carRep.save(car)));
 	}
-	
-/*	@GetMapping("/info")
-	@Timed(value = "removeService")
-	public String getActiveProfile() {
-		return String.format("Hello!  You're %s ", fname);
-	}*/
-	
+
+	/*
+	 * @GetMapping("/info")
+	 * 
+	 * @Timed(value = "removeService") public String getActiveProfile() { return
+	 * String.format("Hello!  You're %s ", fname); }
+	 */
+
 	@RequestMapping("/list")
-	public ResponseEntity<?>  getListOfCars(){
+	public ResponseEntity<?> getListOfCars() {
 		return ResponseEntity.ok(carService.getListOfCars());
 	}
-	
+
 	@RequestMapping("/list1")
-	public ResponseEntity<?> getListOfCarsWithHystrixThreadPool(){
+	public ResponseEntity<?> getListOfCarsWithHystrixThreadPool() {
 		return ResponseEntity.ok(carService.getListOfCarsWithHystrixThreadPool());
 	}
-	
 
 	@GetMapping("/test/{brandName}")
-	public @ResponseBody ResponseEntity<?> getCar( HttpServletRequest request, @PathVariable(name = "brandName") String brandname) {
+	public @ResponseBody ResponseEntity<?> getCar(HttpServletRequest request,
+			@PathVariable(name = "brandName") String brandname) {
 
 		String corlId = request.getHeader("CORRELATION_ID");
 		Optional<Car> oCar = carRep.findOneByBrandName(brandname);
-		
+
 		return oCar.map(c -> ResponseEntity.ok(carResourceAssembler.toResource(c)))
 				.orElse(ResponseEntity.notFound().build());
 	}
-	
 
 }

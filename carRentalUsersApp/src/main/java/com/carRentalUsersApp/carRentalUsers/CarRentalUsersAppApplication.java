@@ -8,12 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.client.RestTemplate;
 
 import com.carRentalUsersApp.carRentalUsers.utils.UserContextInterceptor;
 
 @SpringBootApplication
 @EnableFeignClients("com.carRentalUsersApp.carRentalUsers")
+@EnableResourceServer
 public class CarRentalUsersAppApplication {
 
 	public static void main(String[] args) {

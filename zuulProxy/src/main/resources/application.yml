@@ -2,6 +2,7 @@ server:
  port: 8083
 zuul:
  prefix: /api
+ sensitive-headers: Cookie,Set-Cookie
 ribbon:
  eureka:
   enabled: true
