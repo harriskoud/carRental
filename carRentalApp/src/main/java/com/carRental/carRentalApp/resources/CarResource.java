@@ -107,10 +107,9 @@ public class CarResource {
 	}
 
 	@GetMapping("/test/{brandName}")
-	public @ResponseBody ResponseEntity<?> getCar(HttpServletRequest request,
+	public @ResponseBody ResponseEntity<?> getCarFromUser(
 			@PathVariable(name = "brandName") String brandname) {
 
-		String corlId = request.getHeader("CORRELATION_ID");
 		Optional<Car> oCar = carRep.findOneByBrandName(brandname);
 
 		return oCar.map(c -> ResponseEntity.ok(carResourceAssembler.toResource(c)))

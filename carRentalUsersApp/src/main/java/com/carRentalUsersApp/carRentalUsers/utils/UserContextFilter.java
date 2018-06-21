@@ -12,13 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class UserContextFilter implements Filter {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(UserContextFilter.class);
-
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// TODO Auto-generated method stub
@@ -30,7 +31,10 @@ public class UserContextFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		UserContextHolder.getContext().setCorrelationId(httpServletRequest.getHeader(UserContext.CORRELATION_ID));
-		//UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
+		System.out.println(httpServletRequest.getHeader(UserContext.AUTH_TOKEN));
+		UserContextHolder.getContext().setAuthToken((httpServletRequest.getHeader(UserContext.AUTH_TOKEN)));
+			
+		
 		chain.doFilter(request, response);// in order to forward!!!
 	}
 

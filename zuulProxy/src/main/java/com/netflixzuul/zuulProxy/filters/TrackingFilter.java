@@ -10,8 +10,8 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import com.netflixzuul.zuulProxy.util.FilterUtils;
 
-import lombok.extern.slf4j.Slf4j;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 
 @Component
 public class TrackingFilter extends ZuulFilter {
@@ -29,6 +29,8 @@ public class TrackingFilter extends ZuulFilter {
 
 	@Override
 	public Object run() throws ZuulException {
+		
+		getUserName();
 
 		if (isCorrelationIdPresent()) {
 			LOGGER.info("correlation id found");
@@ -69,6 +71,21 @@ public class TrackingFilter extends ZuulFilter {
 		String generatedCorId = java.util.UUID.randomUUID().toString();
 		System.out.println(generatedCorId);
 		return generatedCorId;
+	}
+
+	private String getUserName() {
+		String result = "";
+		if (filterUtils.getAuthToken() != null) {
+			String authToken = filterUtils.getAuthToken().replace("Bearer ", "");
+			try {
+				Claims claims = Jwts.parser().setSigningKey(("123").getBytes("UTF-8")).parseClaimsJws(authToken)
+						.getBody();
+				result = (String) claims.get("username");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 
 }

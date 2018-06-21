@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -50,6 +50,9 @@ public class CarReservationResource {
 	private final EurekaCarInvocation eurekaCarInvocation;
 	private final EurekaUserInvocation eurekaUserInvocation;
 
+	@Autowired
+	private RestTemplate restWithAuthToken;
+
 	@GetMapping("{reservationId}")
 	public @ResponseBody ResponseEntity<?> getReservation(@PathVariable(name = "reservationId") int reservationId) {
 
@@ -85,11 +88,14 @@ public class CarReservationResource {
 	public @ResponseBody ResponseEntity<?> getReservation(@PathVariable(name = "username") String username,
 			@PathVariable(name = "brandName") String brandName) {
 
-		// ResponseEntity<Car> carEntity = new
-		// RestTemplate().exchange("http://car-microservice/car-microservice/ui/car/{brandName}",HttpMethod.GET,
-		// null,Car.class,brandName);
-		ResponseEntity<Car> carEntity = reservationProxy.getCarInfo(brandName);
-		ResponseEntity<User> userEntity = reservationProxy.getUserInfo(username);
+		// With feign
+		// ResponseEntity<Car> carEntity = reservationProxy.getCarInfo(brandName);
+		// ResponseEntity<User> userEntity = reservationProxy.getUserInfo(username);
+
+		// with interceptor
+		Car carWithAuthToken   = restWithAuthToken.getForObject("http://localhost:8080/ui/car/" + brandName, Car.class);
+		User userWithAuthToken = restWithAuthToken.getForObject("http://localhost:8082/ui/user/" + username,User.class);
+
 		return ResponseEntity.ok(carReservationAssembler.toResource(carReservationRepository.save(CarReservation
 				.builder().carBrand(brandName).bookedBy(username).bookedOn(java.time.LocalDate.now()).build())));
 	}
@@ -107,17 +113,20 @@ public class CarReservationResource {
 	public ResponseEntity<?> hystrixTest(String username, String brandName) {
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping("/new")
 	public @ResponseBody ResponseEntity<?> newReservation(HttpServletRequest request) {
 		String corlId = request.getHeader("CORRELATION_ID");
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-	    params.add("CORRELATION_ID", corlId);
-		
-		ResponseEntity<Car> carEntity = new RestTemplate().postForEntity("http://localhost:8080/car-microservice/ui/car/test/BMW", params,Car.class);
-		//ResponseEntity<User> userEntity = new RestTemplate().getForEntity("http://localhost:8082/user-microservice/ui/user/Harris", User.class);
+		params.add("CORRELATION_ID", corlId);
+
+		ResponseEntity<Car> carEntity = new RestTemplate()
+				.postForEntity("http://localhost:8080/car-microservice/ui/car/test/BMW", params, Car.class);
+		// ResponseEntity<User> userEntity = new
+		// RestTemplate().getForEntity("http://localhost:8082/user-microservice/ui/user/Harris",
+		// User.class);
 		return ResponseEntity.ok().build();
-			
+
 	}
 
 }

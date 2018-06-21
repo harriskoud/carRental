@@ -16,8 +16,9 @@ import com.carRental.carRentalApp.utils.UserContextInterceptor;
 
 @SpringBootApplication
 @RefreshScope
-//if i want to refresh configuration files from the config server, i can hit blabla/management/refresh from actuator dependency
 @EnableResourceServer
+//if i want to refresh configuration files from the config server, i can hit blabla/management/refresh from actuator dependency
+
 public class CarRentalAppApplication  {
 
 	public static void main(String[] args) {

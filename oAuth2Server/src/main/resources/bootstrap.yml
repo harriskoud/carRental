@@ -1,3 +1,8 @@
 spring:
   application:
     name: authentication-microservice
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8888/config-microservice
+      fail-fast: true

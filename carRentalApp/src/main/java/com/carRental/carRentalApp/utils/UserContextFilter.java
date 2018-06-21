@@ -14,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-
-
 @Component
 public class UserContextFilter implements Filter {
 
@@ -23,8 +21,6 @@ public class UserContextFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -32,16 +28,15 @@ public class UserContextFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		UserContextHolder.getContext().setCorrelationId(httpServletRequest.getHeader(UserContext.CORRELATION_ID));
-		// UserContextHolder.getContext().setUserId(httpServletRequest.getHeader(UserContext.USER_ID));
+		System.out.println(httpServletRequest.getHeader(UserContext.AUTH_TOKEN));
+		UserContextHolder.getContext().setCorrelationId(httpServletRequest.getHeader(UserContext.AUTH_TOKEN));
+		UserContextHolder.getContext().setAuthToken((httpServletRequest.getHeader(UserContext.USER_ID)));
 		chain.doFilter(request, response);// in order to forward!!!
-
 
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-
 	}
 
 }
