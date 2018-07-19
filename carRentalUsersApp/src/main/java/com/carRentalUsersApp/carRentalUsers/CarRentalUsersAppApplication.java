@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 
 import com.carRentalUsersApp.carRentalUsers.utils.UserContextInterceptor;
@@ -25,7 +25,7 @@ public class CarRentalUsersAppApplication {
 	@Bean
 	 public RestTemplate getRestTemplate() {
 		RestTemplate restTemplate = new RestTemplate();
-		List interceptors = restTemplate.getInterceptors();
+		List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
 		//if(interceptors == null) {
 			restTemplate.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
 		//}

@@ -1,12 +1,22 @@
 spring:
+  #data:
+    #elasticsearch:
+     # cluster-name: koch
+     # cluster-nodes: localhost:9300
   application:
     name: car-microservice
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      probability: 1
   cloud:
     config:
       enabled: true
-      uri: http://localhost:8888/config-microservice
+      uri: http://localhost:8888
       fail-fast: false
   profiles:
+   #active: docker
     active: dev
     #active: qa
     #active: prod

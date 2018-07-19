@@ -22,7 +22,6 @@ public class UserContextFilter implements Filter {
 	private static Logger LOGGER = LoggerFactory.getLogger(UserContextFilter.class);
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -40,7 +39,6 @@ public class UserContextFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 
 	}
 

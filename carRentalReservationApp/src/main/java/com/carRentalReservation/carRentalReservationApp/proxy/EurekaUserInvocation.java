@@ -9,7 +9,8 @@ import com.carRentalReservation.carRentalReservationApp.domains.ApiDomains.User;
 
 @FeignClient(name = "user-microservice")
 public interface EurekaUserInvocation {
-	@GetMapping("user-microservice/ui/user/{username}") 
+	//@GetMapping("user-microservice/ui/user/{username}") 
+	@GetMapping("ui/user/{username}") 
 	ResponseEntity<User> getUserInfo(@PathVariable(name="username") String username);
 	
 }

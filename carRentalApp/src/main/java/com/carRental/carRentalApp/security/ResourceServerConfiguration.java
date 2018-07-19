@@ -1,4 +1,4 @@
-package com.carRental.carRentalApp.security;
+/*package com.carRental.carRentalApp.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,14 +12,15 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		//All the requests must be authenticated
-		http.authorizeRequests().anyRequest().authenticated();
+		//http.authorizeRequests().anyRequest().authenticated();
 		
 		//The user must have Admin-role
-		/*http
+		http
 		.authorizeRequests()
 		.antMatchers(HttpMethod.DELETE, "/ui/car/*")
 		.hasRole("ADMIN")
 		.anyRequest()
-		.authenticated();*/
+		.authenticated();
 	}
 }
+*/

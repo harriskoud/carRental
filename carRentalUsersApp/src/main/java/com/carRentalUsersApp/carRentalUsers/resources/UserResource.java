@@ -2,6 +2,9 @@ package com.carRentalUsersApp.carRentalUsers.resources;
 
 
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,11 +44,14 @@ public class UserResource {
 	private final UserServices userServices;
 	@Autowired
 	RestTemplate rest;
+	
+	 private static Logger log = LoggerFactory.getLogger(UserResource.class);
 
 	
 	@GetMapping("{username}")
 	public @ResponseBody ResponseEntity<?> getUser(@PathVariable(name="username") String username) {
 		
+		log.info("Get User Info");
 		Optional<User> oUser = userRepository.findByUsername(username);
 		Car car = rest.getForObject("http://localhost:8080/ui/car/AUDI", Car.class);
 		return oUser.map(u -> ResponseEntity.ok(userResourceAssembler.toResource(u))).orElse(ResponseEntity.notFound().build());

@@ -2,9 +2,7 @@ package com.carRental.carRentalApp.domains.ApiDomains;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name="users")
+//@Entity
+//@Table(name="users")
 public class User implements Serializable{
 	
 	@Id

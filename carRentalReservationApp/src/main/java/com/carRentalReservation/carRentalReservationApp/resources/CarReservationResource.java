@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,6 +54,8 @@ public class CarReservationResource {
 
 	@Autowired
 	private RestTemplate restWithAuthToken;
+	
+	private static Logger log = LoggerFactory.getLogger(CarReservationResource.class);
 
 	@GetMapping("{reservationId}")
 	public @ResponseBody ResponseEntity<?> getReservation(@PathVariable(name = "reservationId") int reservationId) {
@@ -93,8 +97,11 @@ public class CarReservationResource {
 		// ResponseEntity<User> userEntity = reservationProxy.getUserInfo(username);
 
 		// with interceptor
-		Car carWithAuthToken   = restWithAuthToken.getForObject("http://localhost:8080/ui/car/" + brandName, Car.class);
-		User userWithAuthToken = restWithAuthToken.getForObject("http://localhost:8082/ui/user/" + username,User.class);
+		//Car carWithAuthToken   = restWithAuthToken.getForObject("http://localhost:8080/ui/car/" + brandName, Car.class);
+		log.info("Create new reservation");
+		ResponseEntity<Car> carEntity = eurekaCarInvocation.getCarInfo(brandName);
+		ResponseEntity<User> userEntity = eurekaUserInvocation.getUserInfo(username);
+		//User userWithAuthToken = restWithAuthToken.getForObject("http://localhost:8082/ui/user/" + username,User.class);
 
 		return ResponseEntity.ok(carReservationAssembler.toResource(carReservationRepository.save(CarReservation
 				.builder().carBrand(brandName).bookedBy(username).bookedOn(java.time.LocalDate.now()).build())));
@@ -104,7 +111,7 @@ public class CarReservationResource {
 	public @ResponseBody ResponseEntity<?> getReservationEureka(@PathVariable(name = "username") String username,
 			@PathVariable(name = "brandName") String brandName) {
 
-		ResponseEntity<Car> carEntity = eurekaCarInvocation.getCarInfo(brandName);
+	//	ResponseEntity<Car> carEntity = eurekaCarInvocation.getCarInfo(brandName);
 		ResponseEntity<User> userEntity = eurekaUserInvocation.getUserInfo(username);
 		return ResponseEntity.ok(carReservationAssembler.toResource(carReservationRepository.save(CarReservation
 				.builder().carBrand(brandName).bookedBy(username).bookedOn(java.time.LocalDate.now()).build())));

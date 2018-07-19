@@ -1,4 +1,4 @@
-package com.carRentalUsersApp.carRentalUsers.security;
+/*package com.carRentalUsersApp.carRentalUsers.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,11 +14,12 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 		http.authorizeRequests().anyRequest().authenticated();
 		
 		//The user must have Admin-role
-/*		http
+		http
 		.authorizeRequests()
 		.antMatchers(HttpMethod.DELETE, "/ui/car/*")
 		.hasRole("ADMIN")
 		.anyRequest()
-		.authenticated();*/
+		.authenticated();
 	}
 }
+*/
