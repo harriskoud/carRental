@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: zipkinServer
+server:
+  port: 9411
+eureka:
+  client:
+    region: default
+    registryFetchIntervalSeconds: 5
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
