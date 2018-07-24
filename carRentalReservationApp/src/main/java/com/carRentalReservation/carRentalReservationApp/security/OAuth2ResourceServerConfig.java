@@ -1,4 +1,4 @@
-/*package com.carRentalReservation.carRentalReservationApp.security;
+package com.carRentalReservation.carRentalReservationApp.security;
 
 
 import org.springframework.context.annotation.Bean;
@@ -39,4 +39,4 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         defaultTokenServices.setTokenStore(tokenStore());
         return defaultTokenServices;
     }
-}*/
+}

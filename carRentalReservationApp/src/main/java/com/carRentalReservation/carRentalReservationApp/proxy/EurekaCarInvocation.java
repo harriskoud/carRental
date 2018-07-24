@@ -3,6 +3,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.carRentalReservation.carRentalReservationApp.domains.ApiDomains.Car;
 
@@ -11,7 +12,7 @@ import com.carRentalReservation.carRentalReservationApp.domains.ApiDomains.Car;
 	public interface EurekaCarInvocation {
 		//@GetMapping("car-microservice/ui/car/{brandName}") 
 		@GetMapping("ui/car/{brandName}") 
-		ResponseEntity<Car> getCarInfo(@PathVariable(name="brandName") String brandName);
+		ResponseEntity<Car> getCarInfo(@RequestHeader("Authorization") String authToken,   @PathVariable(name="brandName") String brandName);
 		
 	}
 

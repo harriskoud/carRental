@@ -1,4 +1,4 @@
-/*package com.carRental.carRentalApp.security;
+package com.carRental.carRentalApp.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,4 +23,3 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 		.authenticated();
 	}
 }
-*/

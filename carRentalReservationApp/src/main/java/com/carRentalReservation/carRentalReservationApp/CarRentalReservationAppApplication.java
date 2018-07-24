@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Component;
 
 import com.carRentalReservation.carRentalReservationApp.repositories.CarReservationRepository;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker
+@EnableSpringDataWebSupport
 public class CarRentalReservationAppApplication implements CommandLineRunner {
 
 	private final CarReservationRepository carReservationRepository;

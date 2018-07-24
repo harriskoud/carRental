@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedResources;
@@ -66,7 +65,7 @@ public class CarReservationResource {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	PagedResources<CarReservationDto> get(@PageableDefault Pageable p, PagedResourcesAssembler pagedAssembler) {
+	PagedResources<CarReservationDto> get( Pageable p, PagedResourcesAssembler pagedAssembler) {
 		Page<CarReservation> u = carReservationRepository.findAll(p);
 		return pagedAssembler.toResource(u, carReservationAssembler);
 	}
@@ -90,17 +89,19 @@ public class CarReservationResource {
 
 	@GetMapping("create-new-reservation/user/{username}/car/{brandName}")
 	public @ResponseBody ResponseEntity<?> getReservation(@PathVariable(name = "username") String username,
-			@PathVariable(name = "brandName") String brandName) {
-
+			@PathVariable(name = "brandName") String brandName, HttpServletRequest request) {
+		log.info("Create new reservation");
+		
 		// With feign
 		// ResponseEntity<Car> carEntity = reservationProxy.getCarInfo(brandName);
 		// ResponseEntity<User> userEntity = reservationProxy.getUserInfo(username);
 
 		// with interceptor
-		//Car carWithAuthToken   = restWithAuthToken.getForObject("http://localhost:8080/ui/car/" + brandName, Car.class);
-		log.info("Create new reservation");
-		ResponseEntity<Car> carEntity = eurekaCarInvocation.getCarInfo(brandName);
-		ResponseEntity<User> userEntity = eurekaUserInvocation.getUserInfo(username);
+		Car carWithAuthToken   = restWithAuthToken.getForObject("http://localhost:8080/ui/car/" + brandName, Car.class);
+		String authToken = request.getHeader("Authorization");
+		//authToken = authToken.substring(authToken.indexOf(" ")+1, authToken.length());
+		ResponseEntity<Car> carEntity = eurekaCarInvocation.getCarInfo(authToken,brandName);
+		//ResponseEntity<User> userEntity = eurekaUserInvocation.getUserInfo(username);
 		//User userWithAuthToken = restWithAuthToken.getForObject("http://localhost:8082/ui/user/" + username,User.class);
 
 		return ResponseEntity.ok(carReservationAssembler.toResource(carReservationRepository.save(CarReservation

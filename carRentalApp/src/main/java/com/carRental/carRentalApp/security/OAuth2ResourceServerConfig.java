@@ -1,4 +1,4 @@
-/*package com.carRental.carRentalApp.security;
+package com.carRental.carRentalApp.security;
 
 
 import org.springframework.context.annotation.Bean;
@@ -37,4 +37,4 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         defaultTokenServices.setTokenStore(tokenStore());
         return defaultTokenServices;
     }
-}*/
+}

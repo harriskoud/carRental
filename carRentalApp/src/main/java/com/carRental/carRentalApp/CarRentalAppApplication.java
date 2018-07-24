@@ -1,19 +1,21 @@
 package com.carRental.carRentalApp;
 
-import com.carRental.carRentalApp.utils.UserContextInterceptor;
+import java.util.Collections;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
+import com.carRental.carRentalApp.utils.UserContextInterceptor;
 
 @SpringBootApplication
 @RefreshScope
-// @EnableResourceServer
+@EnableResourceServer
 // if i want to refresh configuration files from the config server, i can hit
 // blabla/management/refresh from actuator dependency
 
