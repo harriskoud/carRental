@@ -21,26 +21,25 @@ import com.carRental.carRentalApp.utils.UserContextInterceptor;
 
 public class CarRentalAppApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(CarRentalAppApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(CarRentalAppApplication.class, args);
+	}
 
-    @Bean
-    public ValidatingMongoEventListener validatingMongoEventListener() {
-        return new ValidatingMongoEventListener(validator());
-    }
+	@Bean
+	public ValidatingMongoEventListener validatingMongoEventListener() {
+		return new ValidatingMongoEventListener(validator());
+	}
 
-    @Bean
-    public LocalValidatorFactoryBean validator() {
-        return new LocalValidatorFactoryBean();
-    }
+	@Bean
+	public LocalValidatorFactoryBean validator() {
+		return new LocalValidatorFactoryBean();
+	}
 
-    @Bean
-    public RestTemplate getRestTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
-        return restTemplate;
-    }
-
+	@Bean
+	public RestTemplate getRestTemplate() {
+		RestTemplate restTemplate = new RestTemplate();
+		restTemplate.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
+		return restTemplate;
+	}
 
 }

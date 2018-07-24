@@ -1,4 +1,4 @@
-/*package com.carRentalUsersApp.carRentalUsers.security;
+package com.carRentalUsersApp.carRentalUsers.security;
 
 
 
@@ -40,4 +40,4 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
         defaultTokenServices.setTokenStore(tokenStore());
         return defaultTokenServices;
     }
-}*/
+}

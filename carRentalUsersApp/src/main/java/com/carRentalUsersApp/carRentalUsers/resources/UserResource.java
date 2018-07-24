@@ -21,9 +21,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.carRentalUsersApp.carRentalUsers.Dto.UserResourceAssembler;
 import com.carRentalUsersApp.carRentalUsers.domains.User;
-import com.carRentalUsersApp.carRentalUsers.domains.ApiDomains.Car;
+import com.carRentalUsersApp.carRentalUsers.exception.UserNotFoundException;
 import com.carRentalUsersApp.carRentalUsers.repositories.UserRepository;
-import com.carRentalUsersApp.carRentalUsers.services.UserServices;
 
 import lombok.RequiredArgsConstructor;
 
@@ -46,8 +45,10 @@ public class UserResource {
 		
 		log.info("Get User Info");
 		Optional<User> oUser = userRepository.findByUsername(username);
-		//Car car = rest.getForObject("http://localhost:8080/ui/car/AUDI", Car.class);
-		return oUser.map(u -> ResponseEntity.ok(userResourceAssembler.toResource(u))).orElse(ResponseEntity.notFound().build());
+		if (!oUser.isPresent()) {
+			throw new UserNotFoundException("UserName-" + username);
+		}
+		return  ResponseEntity.ok(userResourceAssembler.toResource(oUser.get()));
 		
 	}
 	
